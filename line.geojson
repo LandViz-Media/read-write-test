@@ -5,7 +5,7 @@
       "type": "Feature",
       "properties": {
         "stroke": "rgba(240, 19, 12, 1)",
-        "stroke-width": 2,
+        "stroke-width": 7,
         "stroke-opacity": 1
       },
       "geometry": {
