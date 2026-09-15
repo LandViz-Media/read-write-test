@@ -4,7 +4,7 @@
     {
       "type": "Feature",
       "properties": {
-        "stroke": "rgba(51, 240, 13, 1)",
+        "stroke": "rgba(240, 19, 12, 1)",
         "stroke-width": 2,
         "stroke-opacity": 1
       },
