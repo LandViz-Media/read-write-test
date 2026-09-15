@@ -1,80 +1,229 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
   <title>GitHub Read/Write Test</title>
-  <link rel="stylesheet" href="style.css">
+
+  <link
+    rel="stylesheet"
+    href="style.css"
+  >
+
 </head>
+
+
 <body>
+
   <main class="container">
+
     <h1>GitHub Read/Write Test</h1>
+
     <p class="intro">
-      A small test application for reading and writing JSON data in a GitHub repository.
+      Test application for reading and writing JSON data
+      through a secure Cloudflare Worker.
     </p>
 
-    <section class="card">
-      <h2>Repository</h2>
-      <div class="grid">
-        <label>
-          Owner
-          <input id="owner" value="LandViz-Media">
-        </label>
-        <label>
-          Repository
-          <input id="repo" value="read-write-test">
-        </label>
-        <label class="wide">
-          File path
-          <input id="filePath" value="data/test-data.json">
-        </label>
-        <label class="wide">
-          Branch
-          <input id="branch" value="main">
-        </label>
-      </div>
-    </section>
+
+    <!-- =====================================================
+         Architecture
+         ===================================================== -->
 
     <section class="card">
-      <h2>Authentication</h2>
-      <p class="warning">
-        For this initial test only: enter a GitHub fine-grained Personal Access Token
-        with repository Contents read/write permission. The token is used only in memory
-        by this page and is never saved to the repository.
+
+      <h2>Connection</h2>
+
+      <p>
+        This application communicates with GitHub through a
+        Cloudflare Worker. The GitHub authentication token is
+        stored securely by the Worker and is never sent to
+        this browser application.
       </p>
-      <label>
-        GitHub token
-        <input id="token" type="password" placeholder="github_pat_...">
-      </label>
+
+      <div class="connection">
+
+        <div class="connection-item">
+          <strong>Browser</strong>
+          <span>HTML / JavaScript</span>
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="connection-item">
+          <strong>Cloudflare</strong>
+          <span>Secure Worker</span>
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="connection-item">
+          <strong>GitHub</strong>
+          <span>Repository data</span>
+        </div>
+
+      </div>
+
     </section>
 
+
+    <!-- =====================================================
+         Data
+         ===================================================== -->
+
     <section class="card">
+
       <h2>Data</h2>
-      <label>
+
+      <label for="jsonData">
         JSON data
-        <textarea id="jsonData" spellcheck="false"></textarea>
       </label>
+
+      <textarea
+        id="jsonData"
+        spellcheck="false"
+        aria-label="JSON data"
+      ></textarea>
+
 
       <div class="buttons">
-        <button id="readButton">Read from GitHub</button>
-        <button id="incrementButton">Increment Counter</button>
-        <button id="writeButton" class="primary">Write to GitHub</button>
+
+        <button id="readButton">
+          Read from GitHub
+        </button>
+
+        <button id="incrementButton">
+          Increment Counter
+        </button>
+
+        <button
+          id="writeButton"
+          class="primary"
+        >
+          Write to GitHub
+        </button>
+
       </div>
 
-      <pre id="status" class="status">Ready.</pre>
+
+      <pre
+        id="status"
+        class="status"
+      >Loading...</pre>
+
     </section>
+
+
+    <!-- =====================================================
+         Current file information
+         ===================================================== -->
 
     <section class="card">
-      <h2>How this test works</h2>
-      <ol>
-        <li>Read the JSON file from the public GitHub repository.</li>
-        <li>Edit the JSON in the browser.</li>
-        <li>Write the updated file back through the GitHub Contents API.</li>
-        <li>GitHub creates a commit containing the change.</li>
-      </ol>
+
+      <h2>GitHub File</h2>
+
+      <dl class="file-info">
+
+        <dt>Repository</dt>
+        <dd>LandViz-Media/read-write-test</dd>
+
+        <dt>File</dt>
+        <dd>data/test-data.json</dd>
+
+        <dt>Branch</dt>
+        <dd>main</dd>
+
+        <dt>Authentication</dt>
+        <dd>Cloudflare Worker Secret</dd>
+
+      </dl>
+
     </section>
+
+
+    <!-- =====================================================
+         Test instructions
+         ===================================================== -->
+
+    <section class="card">
+
+      <h2>Test Procedure</h2>
+
+      <ol>
+
+        <li>
+          The application automatically reads the JSON
+          data when the page loads.
+        </li>
+
+        <li>
+          Click <strong>Increment Counter</strong>.
+        </li>
+
+        <li>
+          Click <strong>Write to GitHub</strong>.
+        </li>
+
+        <li>
+          Verify that GitHub reports a successful commit.
+        </li>
+
+        <li>
+          Reload this page.
+        </li>
+
+        <li>
+          Verify that the updated counter is read back
+          from GitHub.
+        </li>
+
+      </ol>
+
+    </section>
+
+
+    <!-- =====================================================
+         Architecture notes
+         ===================================================== -->
+
+    <section class="card">
+
+      <h2>Test 2 Architecture</h2>
+
+      <p>
+        Unlike Test 1, this application does not contain
+        a GitHub Personal Access Token.
+      </p>
+
+      <p>
+        The browser communicates with the Cloudflare Worker,
+        and the Worker communicates with GitHub using the
+        encrypted <code>GITHUB_TOKEN</code> secret.
+      </p>
+
+      <p>
+        This provides the basic architecture we can use
+        for future HTML/JavaScript applications that need
+        controlled read/write access to GitHub data.
+      </p>
+
+    </section>
+
   </main>
 
+
+  <!-- =======================================================
+       Application JavaScript
+       ======================================================= -->
+
   <script src="app.js"></script>
+
 </body>
+
 </html>
