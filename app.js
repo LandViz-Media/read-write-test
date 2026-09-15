@@ -2,204 +2,316 @@
  * GitHub Read/Write Test
  *
  * Responsibility:
- *   Demonstrate reading and writing a JSON file in a GitHub repository
- *   directly from a browser using the GitHub REST Contents API.
+ *   Provide the browser interface for reading and writing JSON data
+ *   through the Cloudflare Worker.
+ *
+ * Architecture:
+ *
+ *   Browser
+ *      |
+ *      | GET /read
+ *      | PUT /write
+ *      v
+ *   Cloudflare Worker
+ *      |
+ *      | authenticated GitHub API request
+ *      v
+ *   GitHub Repository
  *
  * IMPORTANT:
- *   This version is intentionally a proof-of-concept. The GitHub token is
- *   entered by the user and held only in browser memory. Do NOT hard-code
- *   a token in this file or publish one in the repository.
+ *   This application never receives or stores the GitHub Personal
+ *   Access Token. The token is stored securely as a Cloudflare
+ *   Worker Secret.
  */
 
-const GITHUB_API = "https://api.github.com";
 
-const ownerInput = document.getElementById("owner");
-const repoInput = document.getElementById("repo");
-const filePathInput = document.getElementById("filePath");
-const branchInput = document.getElementById("branch");
-const tokenInput = document.getElementById("token");
-const jsonData = document.getElementById("jsonData");
-const status = document.getElementById("status");
+// ------------------------------------------------------------
+// Configuration
+// ------------------------------------------------------------
 
+// URL of the Cloudflare Worker.
+//
+// The browser communicates with this URL instead of communicating
+// directly with the GitHub API.
+const WORKER_URL =
+  "https://read-write-test-api.cjseeger.workers.dev";
+
+
+// ------------------------------------------------------------
+// Page elements
+// ------------------------------------------------------------
+
+const jsonData =
+  document.getElementById("jsonData");
+
+const status =
+  document.getElementById("status");
+
+
+// ------------------------------------------------------------
+// State
+// ------------------------------------------------------------
+
+// GitHub requires the current file SHA when updating an existing
+// file.
+//
+// The Cloudflare Worker returns this SHA when we read the file.
 let currentFileSha = null;
 
+
+// ------------------------------------------------------------
+// Status display
+// ------------------------------------------------------------
+
 function setStatus(message, type = "") {
+
   status.textContent = message;
-  status.className = `status ${type}`.trim();
+
+  status.className =
+    `status ${type}`.trim();
 }
 
-function getSettings() {
-  return {
-    owner: ownerInput.value.trim(),
-    repo: repoInput.value.trim(),
-    filePath: filePathInput.value.trim(),
-    branch: branchInput.value.trim(),
-    token: tokenInput.value.trim()
-  };
-}
 
-function apiHeaders(token) {
-  const headers = {
-    "Accept": "application/vnd.github+json",
-    "X-GitHub-Api-Version": "2022-11-28"
-  };
-
-  if (token) {
-    headers["Authorization"] = `Bearer ${token}`;
-  }
-
-  return headers;
-}
+// ------------------------------------------------------------
+// Read data through Cloudflare Worker
+// ------------------------------------------------------------
 
 async function readFromGitHub() {
-  const { owner, repo, filePath, branch, token } = getSettings();
 
-  if (!owner || !repo || !filePath) {
-    setStatus("Owner, repository, and file path are required.", "error");
-    return;
-  }
-
-  setStatus("Reading from GitHub...");
+  setStatus(
+    "Reading data through Cloudflare Worker..."
+  );
 
   try {
-    const url =
-      `${GITHUB_API}/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}` +
-      `/contents/${filePath.split("/").map(encodeURIComponent).join("/")}` +
-      `?ref=${encodeURIComponent(branch)}`;
 
-    const response = await fetch(url, {
-      headers: apiHeaders(token)
-    });
+    const response =
+      await fetch(`${WORKER_URL}/read`, {
+        method: "GET"
+      });
 
-    const result = await response.json();
+
+    const result =
+      await response.json();
+
 
     if (!response.ok) {
-      throw new Error(result.message || `GitHub returned HTTP ${response.status}`);
+
+      throw new Error(
+        result.error ||
+        `Worker returned HTTP ${response.status}`
+      );
     }
 
-    if (result.type !== "file") {
-      throw new Error("The requested GitHub path is not a file.");
-    }
 
-    currentFileSha = result.sha;
+    // Save the GitHub SHA returned by the Worker.
+    //
+    // We need this later when we write the updated file.
+    currentFileSha =
+      result.sha;
 
-    const decoded = decodeBase64Utf8(result.content);
-    const parsed = JSON.parse(decoded);
 
-    jsonData.value = JSON.stringify(parsed, null, 2);
+    // Display the JSON data.
+    jsonData.value =
+      JSON.stringify(
+        result.data,
+        null,
+        2
+      );
+
 
     setStatus(
-      `Read successful.
-` +
-      `File: ${filePath}
-` +
+      `Read successful through Cloudflare Worker.\n` +
       `SHA: ${currentFileSha}`,
       "success"
     );
+
   } catch (error) {
-    setStatus(`Read failed: ${error.message}`, "error");
+
+    setStatus(
+      `Read failed: ${error.message}`,
+      "error"
+    );
   }
 }
 
+
+// ------------------------------------------------------------
+// Write data through Cloudflare Worker
+// ------------------------------------------------------------
+
 async function writeToGitHub() {
-  const { owner, repo, filePath, branch, token } = getSettings();
 
-  if (!token) {
-    setStatus("A GitHub token is required for writing.", "error");
-    return;
-  }
-
-  if (!owner || !repo || !filePath) {
-    setStatus("Owner, repository, and file path are required.", "error");
-    return;
-  }
-
-  let parsed;
-
-  try {
-    parsed = JSON.parse(jsonData.value);
-  } catch (error) {
-    setStatus(`The JSON is invalid: ${error.message}`, "error");
-    return;
-  }
-
+  // Make sure we have a SHA from a previous read.
   if (!currentFileSha) {
-    setStatus("Read the file first so the application has the current file SHA.", "error");
-    return;
-  }
-
-  setStatus("Writing to GitHub...");
-
-  try {
-    const url =
-      `${GITHUB_API}/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}` +
-      `/contents/${filePath.split("/").map(encodeURIComponent).join("/")}`;
-
-    const content = JSON.stringify(parsed, null, 2) + "\n";
-
-    const response = await fetch(url, {
-      method: "PUT",
-      headers: {
-        ...apiHeaders(token),
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        message: `Update ${filePath} from read/write test`,
-        content: encodeBase64Utf8(content),
-        sha: currentFileSha,
-        branch
-      })
-    });
-
-    const result = await response.json();
-
-    if (!response.ok) {
-      throw new Error(result.message || `GitHub returned HTTP ${response.status}`);
-    }
-
-    currentFileSha = result.content?.sha || null;
 
     setStatus(
-      `Write successful!
-` +
-      `Commit: ${result.commit?.html_url || "(commit created)"}
-` +
+      "Read the data first so the application has the current file SHA.",
+      "error"
+    );
+
+    return;
+  }
+
+
+  // Convert the text area contents back into a JavaScript object.
+  let data;
+
+  try {
+
+    data =
+      JSON.parse(jsonData.value);
+
+  } catch (error) {
+
+    setStatus(
+      `The JSON is invalid: ${error.message}`,
+      "error"
+    );
+
+    return;
+  }
+
+
+  setStatus(
+    "Writing data through Cloudflare Worker..."
+  );
+
+
+  try {
+
+    const response =
+      await fetch(`${WORKER_URL}/write`, {
+
+        method: "PUT",
+
+        headers: {
+          "Content-Type":
+            "application/json"
+        },
+
+        body: JSON.stringify({
+
+          // Data that should be written to GitHub.
+          data: data,
+
+          // SHA of the version we originally read.
+          sha: currentFileSha
+        })
+      });
+
+
+    const result =
+      await response.json();
+
+
+    if (!response.ok) {
+
+      throw new Error(
+        result.error ||
+        `Worker returned HTTP ${response.status}`
+      );
+    }
+
+
+    // GitHub returns a new SHA after the commit.
+    //
+    // Save it so another write can happen without
+    // requiring another read first.
+    currentFileSha =
+      result.sha;
+
+
+    setStatus(
+      `Write successful through Cloudflare Worker!\n` +
+      `Commit: ${result.commitUrl || "(commit created)"}\n` +
       `New SHA: ${currentFileSha}`,
       "success"
     );
+
   } catch (error) {
-    setStatus(`Write failed: ${error.message}`, "error");
+
+    setStatus(
+      `Write failed: ${error.message}`,
+      "error"
+    );
   }
 }
+
+
+// ------------------------------------------------------------
+// Increment counter
+// ------------------------------------------------------------
 
 function incrementCounter() {
+
   try {
-    const data = JSON.parse(jsonData.value);
-    data.counter = Number(data.counter || 0) + 1;
-    data.lastUpdated = new Date().toISOString();
-    jsonData.value = JSON.stringify(data, null, 2);
-    setStatus("Counter incremented locally. Click Write to GitHub to commit it.");
+
+    const data =
+      JSON.parse(jsonData.value);
+
+
+    data.counter =
+      Number(data.counter || 0) + 1;
+
+
+    data.lastUpdated =
+      new Date().toISOString();
+
+
+    jsonData.value =
+      JSON.stringify(
+        data,
+        null,
+        2
+      );
+
+
+    setStatus(
+      "Counter incremented locally.\n" +
+      "Click Write to GitHub to commit the change."
+    );
+
   } catch (error) {
-    setStatus(`Cannot increment: ${error.message}`, "error");
+
+    setStatus(
+      `Cannot increment counter: ${error.message}`,
+      "error"
+    );
   }
 }
 
-function encodeBase64Utf8(text) {
-  const bytes = new TextEncoder().encode(text);
-  let binary = "";
-  bytes.forEach(byte => binary += String.fromCharCode(byte));
-  return btoa(binary);
-}
 
-function decodeBase64Utf8(base64) {
-  const binary = atob(base64.replace(/\n/g, ""));
-  const bytes = Uint8Array.from(binary, char => char.charCodeAt(0));
-  return new TextDecoder().decode(bytes);
-}
+// ------------------------------------------------------------
+// Button events
+// ------------------------------------------------------------
 
-document.getElementById("readButton").addEventListener("click", readFromGitHub);
-document.getElementById("writeButton").addEventListener("click", writeToGitHub);
-document.getElementById("incrementButton").addEventListener("click", incrementCounter);
+document
+  .getElementById("readButton")
+  .addEventListener(
+    "click",
+    readFromGitHub
+  );
 
-// Automatically perform the public read when the page opens.
+
+document
+  .getElementById("writeButton")
+  .addEventListener(
+    "click",
+    writeToGitHub
+  );
+
+
+document
+  .getElementById("incrementButton")
+  .addEventListener(
+    "click",
+    incrementCounter
+  );
+
+
+// ------------------------------------------------------------
+// Initial read
+// ------------------------------------------------------------
+
+// Automatically read the data when the page loads.
 readFromGitHub();
