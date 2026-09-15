@@ -4,9 +4,9 @@
     {
       "type": "Feature",
       "properties": {
-        "stroke": "rgba(240, 19, 12, 1)",
-        "stroke-width": 7,
-        "stroke-opacity": 1
+        "stroke-width": 2,
+        "stroke-opacity": 1,
+        "stroke": "rgba(240, 19, 12, 1)"
       },
       "geometry": {
         "type": "LineString",
@@ -54,6 +54,33 @@
           [
             -97.6669933,
             46.9621211
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stroke": "#312E81"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -99.3103153,
+            47.2079611
+          ],
+          [
+            -97.3834511,
+            45.5919778
+          ],
+          [
+            -97.6992519,
+            41.2382996
+          ],
+          [
+            -96.5210841,
+            38.5392398
           ]
         ]
       }
