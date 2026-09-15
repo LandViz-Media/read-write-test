@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHub Read/Write Test</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="container">
+    <h1>GitHub Read/Write Test</h1>
+    <p class="intro">
+      A small test application for reading and writing JSON data in a GitHub repository.
+    </p>
+
+    <section class="card">
+      <h2>Repository</h2>
+      <div class="grid">
+        <label>
+          Owner
+          <input id="owner" value="LandViz-Media">
+        </label>
+        <label>
+          Repository
+          <input id="repo" value="read-write-test">
+        </label>
+        <label class="wide">
+          File path
+          <input id="filePath" value="data/test-data.json">
+        </label>
+        <label class="wide">
+          Branch
+          <input id="branch" value="main">
+        </label>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Authentication</h2>
+      <p class="warning">
+        For this initial test only: enter a GitHub fine-grained Personal Access Token
+        with repository Contents read/write permission. The token is used only in memory
+        by this page and is never saved to the repository.
+      </p>
+      <label>
+        GitHub token
+        <input id="token" type="password" placeholder="github_pat_...">
+      </label>
+    </section>
+
+    <section class="card">
+      <h2>Data</h2>
+      <label>
+        JSON data
+        <textarea id="jsonData" spellcheck="false"></textarea>
+      </label>
+
+      <div class="buttons">
+        <button id="readButton">Read from GitHub</button>
+        <button id="incrementButton">Increment Counter</button>
+        <button id="writeButton" class="primary">Write to GitHub</button>
+      </div>
+
+      <pre id="status" class="status">Ready.</pre>
+    </section>
+
+    <section class="card">
+      <h2>How this test works</h2>
+      <ol>
+        <li>Read the JSON file from the public GitHub repository.</li>
+        <li>Edit the JSON in the browser.</li>
+        <li>Write the updated file back through the GitHub Contents API.</li>
+        <li>GitHub creates a commit containing the change.</li>
+      </ol>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
