@@ -38,6 +38,19 @@
       "longitude": -100.890143,
       "displayName": "Turtle Lake, McLean County, North Dakota, United States",
       "submittedAt": "2026-09-16T01:18:19.011Z"
+    },
+    {
+      "id": "r-1789521522931",
+      "gender": "M",
+      "favoriteNumber10": 8,
+      "favoriteNumber100": 28,
+      "favoriteColor": "Orange",
+      "city": "Oologah",
+      "state": "OK",
+      "latitude": 36.4470387,
+      "longitude": -95.7083151,
+      "displayName": "Oologah, Rogers County, Oklahoma, United States",
+      "submittedAt": "2026-09-16T01:18:42.931Z"
     }
   ]
 }
