@@ -138,6 +138,29 @@
           36.4470387
         ]
       }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "r-1789521568997",
+        "gender": "F",
+        "favoriteNumber10": 3,
+        "favoriteNumber100": 33,
+        "favoriteColor": "blue",
+        "city": "Madison",
+        "state": "WI",
+        "latitude": 43.07469,
+        "longitude": -89.3841663,
+        "displayName": "Madison, Dane County, Wisconsin, United States",
+        "submittedAt": "2026-09-16T01:19:28.997Z"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -89.3841663,
+          43.07469
+        ]
+      }
     }
   ]
 }
