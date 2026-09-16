@@ -1,0 +1,10 @@
+{
+  "respondents": [
+    {"id":"r-001","gender":"M","favoriteNumber10":7,"favoriteNumber100":72,"favoriteColor":"blue","city":"Denver","state":"CO","latitude":39.7392,"longitude":-104.9903},
+    {"id":"r-002","gender":"F","favoriteNumber10":4,"favoriteNumber100":41,"favoriteColor":"orange","city":"Chicago","state":"IL","latitude":41.8781,"longitude":-87.6298},
+    {"id":"r-003","gender":"F","favoriteNumber10":9,"favoriteNumber100":88,"favoriteColor":"purple","city":"Seattle","state":"WA","latitude":47.6062,"longitude":-122.3321},
+    {"id":"r-004","gender":"M","favoriteNumber10":2,"favoriteNumber100":18,"favoriteColor":"turquoise","city":"Austin","state":"TX","latitude":30.2672,"longitude":-97.7431},
+    {"id":"r-005","gender":"F","favoriteNumber10":6,"favoriteNumber100":63,"favoriteColor":"pink","city":"Boston","state":"MA","latitude":42.3601,"longitude":-71.0589},
+    {"id":"r-006","gender":"M","favoriteNumber10":5,"favoriteNumber100":55,"favoriteColor":"gold","city":"Portland","state":"OR","latitude":45.5152,"longitude":-122.6784}
+  ]
+}
