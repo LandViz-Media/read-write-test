@@ -69,6 +69,29 @@
           46.625811
         ]
       }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "r-1789563818702",
+        "gender": "F",
+        "favoriteNumber10": 5,
+        "favoriteNumber100": 13,
+        "favoriteColor": "Gray",
+        "city": "Minneapolis",
+        "state": "MN",
+        "latitude": 44.9772995,
+        "longitude": -93.2654692,
+        "displayName": "Minneapolis, Hennepin County, Minnesota, United States",
+        "submittedAt": "2026-09-16T13:03:38.703Z"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -93.2654692,
+          44.9772995
+        ]
+      }
     }
   ]
 }
