@@ -23,6 +23,29 @@
           36.4470387
         ]
       }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "r-1789523932414",
+        "gender": "M",
+        "favoriteNumber10": 9,
+        "favoriteNumber100": 29,
+        "favoriteColor": "Red",
+        "city": "Vail",
+        "state": "CO",
+        "latitude": 39.6438028,
+        "longitude": -106.3888231,
+        "displayName": "Vail, Eagle County, Colorado, 81657, United States",
+        "submittedAt": "2026-09-16T01:58:52.415Z"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -106.3888231,
+          39.6438028
+        ]
+      }
     }
   ]
 }
