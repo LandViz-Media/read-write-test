@@ -69,6 +69,29 @@
           36.4470387
         ]
       }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "r-1789521499011",
+        "gender": "M",
+        "favoriteNumber10": 6,
+        "favoriteNumber100": 56,
+        "favoriteColor": "pink",
+        "city": "Turtle Lake",
+        "state": "ND",
+        "latitude": 47.519998,
+        "longitude": -100.890143,
+        "displayName": "Turtle Lake, McLean County, North Dakota, United States",
+        "submittedAt": "2026-09-16T01:18:19.011Z"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -100.890143,
+          47.519998
+        ]
+      }
     }
   ]
 }
