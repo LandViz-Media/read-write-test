@@ -189,14 +189,25 @@ async function submitSurvey(event) {
   button.disabled = true;
 
   try {
-    const respondent = {
-      id: `r-${Date.now()}`,
+    const formValues = {
       gender: document.querySelector("#gender").value,
-      favoriteNumber10: Number(document.querySelector("#n10").value),
-      favoriteNumber100: Number(document.querySelector("#n100").value),
+      favoriteNumber10: document.querySelector("#n10").value.trim(),
+      favoriteNumber100: document.querySelector("#n100").value.trim(),
       favoriteColor: document.querySelector("#color").value.trim(),
       city: document.querySelector("#city").value.trim(),
-      state: document.querySelector("#state").value.trim().toUpperCase(),
+      state: document.querySelector("#state").value.trim().toUpperCase()
+    };
+
+    validateFormInput(formValues);
+
+    const respondent = {
+      id: `r-${Date.now()}`,
+      gender: formValues.gender,
+      favoriteNumber10: Number(formValues.favoriteNumber10),
+      favoriteNumber100: Number(formValues.favoriteNumber100),
+      favoriteColor: formValues.favoriteColor,
+      city: formValues.city,
+      state: formValues.state,
       submittedAt: new Date().toISOString()
     };
 
@@ -236,6 +247,43 @@ async function submitSurvey(event) {
   } finally {
     button.disabled = false;
   }
+}
+
+
+function validateFormInput(values) {
+  if (!["M", "F"].includes(values.gender)) {
+    throw new Error("Please select M or F for gender.");
+  }
+
+  if (!isIntegerInRange(values.favoriteNumber10, 0, 10)) {
+    throw new Error("Favorite number 0–10 must be a whole number from 0 through 10.");
+  }
+
+  if (!isIntegerInRange(values.favoriteNumber100, 0, 100)) {
+    throw new Error("Favorite number 0–100 must be a whole number from 0 through 100.");
+  }
+
+  if (!values.favoriteColor) {
+    throw new Error("Please enter a favorite color.");
+  }
+
+  if (!cssColor(values.favoriteColor)) {
+    throw new Error(`“${values.favoriteColor}” is not recognized as a valid CSS color. Try a color name such as blue or orange, or a value such as #663399.`);
+  }
+
+  if (!values.city) {
+    throw new Error("Please enter a U.S. city.");
+  }
+
+  if (!values.state) {
+    throw new Error("Please enter a state or state abbreviation.");
+  }
+}
+
+function isIntegerInRange(value, min, max) {
+  if (value === "") return false;
+  const number = Number(value);
+  return Number.isInteger(number) && number >= min && number <= max;
 }
 
 async function geocode(cityName, stateName) {
