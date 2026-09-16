@@ -38,6 +38,19 @@
       "longitude": -99.142054,
       "displayName": "Gackle, Logan County, North Dakota, United States",
       "submittedAt": "2026-09-16T02:17:11.149Z"
+    },
+    {
+      "id": "r-1789563818702",
+      "gender": "F",
+      "favoriteNumber10": 5,
+      "favoriteNumber100": 13,
+      "favoriteColor": "Gray",
+      "city": "Minneapolis",
+      "state": "MN",
+      "latitude": 44.9772995,
+      "longitude": -93.2654692,
+      "displayName": "Minneapolis, Hennepin County, Minnesota, United States",
+      "submittedAt": "2026-09-16T13:03:38.703Z"
     }
   ]
 }
