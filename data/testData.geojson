@@ -1,1 +1,142 @@
-{"type":"FeatureCollection","features":[{"type":"Feature","properties":{"id":"r-001","gender":"M","favoriteNumber10":7,"favoriteNumber100":72,"favoriteColor":"blue","city":"Denver","state":"CO"},"geometry":{"type":"Point","coordinates":[-104.9903,39.7392]}},{"type":"Feature","properties":{"id":"r-002","gender":"F","favoriteNumber10":4,"favoriteNumber100":41,"favoriteColor":"orange","city":"Chicago","state":"IL"},"geometry":{"type":"Point","coordinates":[-87.6298,41.8781]}},{"type":"Feature","properties":{"id":"r-003","gender":"F","favoriteNumber10":9,"favoriteNumber100":88,"favoriteColor":"purple","city":"Seattle","state":"WA"},"geometry":{"type":"Point","coordinates":[-122.3321,47.6062]}},{"type":"Feature","properties":{"id":"r-004","gender":"M","favoriteNumber10":2,"favoriteNumber100":18,"favoriteColor":"turquoise","city":"Austin","state":"TX"},"geometry":{"type":"Point","coordinates":[-97.7431,30.2672]}},{"type":"Feature","properties":{"id":"r-005","gender":"F","favoriteNumber10":6,"favoriteNumber100":63,"favoriteColor":"pink","city":"Boston","state":"MA"},"geometry":{"type":"Point","coordinates":[-71.0589,42.3601]}},{"type":"Feature","properties":{"id":"r-006","gender":"M","favoriteNumber10":5,"favoriteNumber100":55,"favoriteColor":"gold","city":"Portland","state":"OR"},"geometry":{"type":"Point","coordinates":[-122.6784,45.5152]}}]}
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "r-001",
+        "gender": "M",
+        "favoriteNumber10": 7,
+        "favoriteNumber100": 72,
+        "favoriteColor": "blue",
+        "city": "Denver",
+        "state": "CO"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -104.9903,
+          39.7392
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "r-002",
+        "gender": "F",
+        "favoriteNumber10": 4,
+        "favoriteNumber100": 41,
+        "favoriteColor": "orange",
+        "city": "Chicago",
+        "state": "IL"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6298,
+          41.8781
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "r-003",
+        "gender": "F",
+        "favoriteNumber10": 9,
+        "favoriteNumber100": 88,
+        "favoriteColor": "purple",
+        "city": "Seattle",
+        "state": "WA"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.3321,
+          47.6062
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "r-004",
+        "gender": "M",
+        "favoriteNumber10": 2,
+        "favoriteNumber100": 18,
+        "favoriteColor": "turquoise",
+        "city": "Austin",
+        "state": "TX"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -97.7431,
+          30.2672
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "r-005",
+        "gender": "F",
+        "favoriteNumber10": 6,
+        "favoriteNumber100": 63,
+        "favoriteColor": "pink",
+        "city": "Boston",
+        "state": "MA"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -71.0589,
+          42.3601
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "r-006",
+        "gender": "M",
+        "favoriteNumber10": 5,
+        "favoriteNumber100": 55,
+        "favoriteColor": "gold",
+        "city": "Portland",
+        "state": "OR"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.6784,
+          45.5152
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "r-1789520776074",
+        "gender": "M",
+        "favoriteNumber10": 7,
+        "favoriteNumber100": 42,
+        "favoriteColor": "Blue",
+        "city": "Colorado Springs",
+        "state": "CO",
+        "latitude": 38.8339578,
+        "longitude": -104.825348,
+        "displayName": "Colorado Springs, El Paso County, Colorado, United States",
+        "submittedAt": "2026-09-16T01:06:16.074Z"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -104.825348,
+          38.8339578
+        ]
+      }
+    }
+  ]
+}
